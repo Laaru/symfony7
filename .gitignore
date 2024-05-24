@@ -4,7 +4,6 @@
 Dockerfile
 
 LICENSE
-README.md
 compose.override.yaml
 compose.prod.yaml
 compose.yaml
