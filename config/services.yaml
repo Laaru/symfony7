@@ -1,0 +1,52 @@
+services:
+    # default configuration for services in *this* file
+    _defaults:
+        autowire: true      # Automatically injects dependencies in your services.
+        autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+
+    # makes classes in src/ available to be used as services
+    # this creates a service per class whose id is the fully-qualified class name
+    App\:
+        resource: '../src/'
+        exclude:
+            - '../src/DependencyInjection/'
+            - '../src/Entity/'
+            - '../src/Kernel.php'
+            - '../src/Service/'                 # services configured manually
+            - '../src/Controller/Test/'         # test controllers configured manually
+            - '../src/MessageHandler/'          # message handlers configured manually
+    
+    ###################################################################
+    # MANUAL CONFIGURATIONS
+    
+    # EventListeners
+    App\EventListener\ExceptionListener:
+        tags:
+            - { name: 'kernel.event_listener', event: 'kernel.exception' }
+    
+    # Services       
+    App\Service\ExternalApi\RestfulApiDev:
+        arguments:
+            $client: '@http_client'
+            $logger: '@monolog.logger.external_api'
+            
+    App\Service\Import\ProductImport:
+        arguments:
+            $entityManager: '@doctrine.orm.default_entity_manager'
+            $validator: '@validator'
+            $productRepository: '@App\Repository\ProductRepository'
+            $colorRepository: '@App\Repository\ColorRepository'
+            $logger: '@monolog.logger.product_import'
+
+    # Controllers
+    App\Controller\Test\TestPageController:
+        tags: [ 'controller.service_arguments' ]
+        arguments:
+            $restfulApiDev: '@App\Service\ExternalApi\RestfulApiDev'
+            $productImport: '@App\Service\Import\ProductImport'
+
+    # Message Handlers
+    App\MessageHandler\ProductOperationMessageHandler:
+        arguments:
+            $logger: '@monolog.logger.messenger'
+    
