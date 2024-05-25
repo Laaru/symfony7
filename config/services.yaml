@@ -15,6 +15,7 @@ services:
             - '../src/Service/'                 # services configured manually
             - '../src/Controller/Test/'         # test controllers configured manually
             - '../src/MessageHandler/'          # message handlers configured manually
+            - '../src/Command/'                 # commands configured manually
     
     ###################################################################
     # MANUAL CONFIGURATIONS
@@ -49,4 +50,10 @@ services:
     App\MessageHandler\ProductOperationMessageHandler:
         arguments:
             $logger: '@monolog.logger.messenger'
-    
+            
+    # Commands
+    App\Command\ImportProductsCommand:
+        tags: [ 'console.command' ]
+        arguments:
+            $restfulApiDev: '@App\Service\ExternalApi\RestfulApiDev'
+            $productImport: '@App\Service\Import\ProductImport'

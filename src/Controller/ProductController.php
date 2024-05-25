@@ -21,12 +21,12 @@ use Nelmio\ApiDocBundle\Annotation\Model;
 class ProductController extends AbstractController
 {
     public function __construct(
-        private MessageBusInterface        $messageBus,
-        private readonly ProductRepository $productRepository,
-        private EntityManagerInterface     $entityManager,
-        private ValidatorInterface         $validator,
-        private StoreRepository            $storeRepository,
-        private ColorRepository            $colorRepository
+        private readonly MessageBusInterface    $messageBus,
+        private readonly ProductRepository      $productRepository,
+        private readonly EntityManagerInterface $entityManager,
+        private readonly ValidatorInterface     $validator,
+        private readonly StoreRepository        $storeRepository,
+        private readonly ColorRepository        $colorRepository
     )
     {
     }
