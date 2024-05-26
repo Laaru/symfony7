@@ -4,17 +4,16 @@ monolog:
         - external_api
         - product_import
         - messenger
+        - console_command
     handlers:
 #        file_log: # not working due to docker file permissions issues
 #            channels: [ 'external_api' ]
 #            type: rotating_file
 #            max_files: 10
-#            # log to var/log/(environment).log
 #            path: "%kernel.logs_dir%/external_api/%kernel.environment%.log"
-#            # log *all* messages (debug is lowest level)
 #            level: debug
         db_log:
             type: service
             id: App\Log\Monolog\DatabaseHandler
-            channels: [ 'external_api', 'product_import', 'messenger' ]
+            channels: [ 'external_api', 'product_import', 'messenger', 'console_command' ]
             level: debug

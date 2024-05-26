@@ -1,8 +1,8 @@
 # symfony7
 
-educational project
+Educational project. See makefile got startup info
 
-uses:
+Uses:
 * symfony-docker https://github.com/dunglas/symfony-docker
 * symfony7 https://symfony.com/doc/current/index.html
 

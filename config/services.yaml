@@ -20,11 +20,6 @@ services:
     ###################################################################
     # MANUAL CONFIGURATIONS
     
-    # EventListeners
-    App\EventListener\ExceptionListener:
-        tags:
-            - { name: 'kernel.event_listener', event: 'kernel.exception' }
-    
     # Services       
     App\Service\ExternalApi\RestfulApiDev:
         arguments:
@@ -57,3 +52,15 @@ services:
         arguments:
             $restfulApiDev: '@App\Service\ExternalApi\RestfulApiDev'
             $productImport: '@App\Service\Import\ProductImport'
+            
+    # EventListeners
+    App\EventListener\ExceptionListener:
+        tags:
+            - { name: 'kernel.event_listener', event: 'kernel.exception' }
+        
+    # EventSubscribers
+    App\EventSubscriber\ConsoleCommandSubscriber:
+        tags:
+            - { name: 'kernel.event_subscriber' }
+        arguments:
+            $logger: '@monolog.logger.console_command'
